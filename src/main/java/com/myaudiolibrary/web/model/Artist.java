@@ -4,7 +4,6 @@ package com.myaudiolibrary.web.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -19,7 +18,6 @@ public class Artist
     private long id;
 
     @Column(name = "Name",nullable = false)
-//    @NotNull
     private String name;
 
     @OneToMany(mappedBy = "artist",fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)//orphanRemoval = true
