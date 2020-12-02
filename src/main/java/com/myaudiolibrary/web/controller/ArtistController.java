@@ -75,5 +75,34 @@ public class ArtistController
         return "listeArtists";
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(method = RequestMethod.GET, value = "",params = {"name"})
+    public String searchArtists
+            (
+                    final ModelMap model ,
+                    @RequestParam String name,
+                    @RequestParam (defaultValue = "0")Integer page,
+                    @RequestParam (defaultValue = "10")Integer size,
+                    @RequestParam (defaultValue = "name")String sortProperty,
+                    @RequestParam (defaultValue = "ASC")String sortDirection
+            )
+    {
+
+
+        PageRequest pageRequest = PageRequest.of(page,size, Sort.Direction.fromString(sortDirection),sortProperty);
+
+        Page<Artist> artistPage = artistRepository.findArtistsByNameContains(name,pageRequest);
+
+        model.put("listeArtists",artistPage);
+
+
+        return "listeArtists";
+    }
+
+
+
 
 }
