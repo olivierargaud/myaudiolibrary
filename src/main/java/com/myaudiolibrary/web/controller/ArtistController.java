@@ -43,7 +43,7 @@ public class ArtistController
         }
 
         Artist artist = artistOptional.get();
-        model.put("emp",artist);
+        model.put("artist",artist);
 
         return "detailArtist";
 
