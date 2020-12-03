@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -100,6 +101,94 @@ public class ArtistController
 
 
         return "listeArtists";
+    }
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                    appel formulaire nouvel artist                                                  //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/new")
+    public String newArtist(final ModelMap model)
+    {
+        System.out.println("on passe a la creation d'artist");
+        Artist artist = new Artist();
+
+        model.put("artist",artist);
+
+        return "detailArtist";
+    }
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                    save artist                                                                     //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    @RequestMapping
+    (
+        method = RequestMethod.POST,
+        value = "",
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String saveArtist(final ModelMap model, Artist artist)
+    {
+        System.out.println("on sauve l'artist ");
+        System.out.println("nom de l'artist "+artist.getName());
+
+        artistRepository.save(artist);
+
+        model.put("artist",artistRepository.findByName(artist.getName()));
+
+        return "detailArtist";
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                    update artist                                                                     //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    @RequestMapping
+    (
+        method = RequestMethod.PUT,
+        value = "/{id}",
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String updateArtist(final ModelMap model, Artist artist)
+    {
+        System.out.println("on met a jour l'artist ");
+        System.out.println("nom de l'artist "+artist.getName());
+
+        model.put("artist",artist);
+
+        return "detailArtist";
+    }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                    delete artist                                                                   //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "")
+    public String deleteArtist(final ModelMap model)
+    {
+        System.out.println("delete celui la");
+        Artist artist = new Artist();
+
+        model.put("artist",artist);
+
+        return "detailArtist";
     }
 
 
