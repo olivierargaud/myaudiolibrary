@@ -61,10 +61,11 @@
 						<!--                <input type="hidden" name="_method" value="delete">-->
 						<button type="submit"  class="btn btn-primary">Enregistrer</button>
 					</form>
-					<form th:if="${artist.getId()}" th:action="'/artists'" th:method="delete">
+					<form th:if="${artist.getId()}" th:action="'/artists'+${artist.getId()}" th:method="delete">
 						<!--                <input type="hidden" name="_method" value="delete">-->
 						<button type="submit" class="btn btn-danger"  >Supprimer</button>
 					</form>
+
 <!--					<input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">-->
 				</div>
 

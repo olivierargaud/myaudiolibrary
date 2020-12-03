@@ -163,12 +163,19 @@ public class ArtistController
         value = "/{id}",
         consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
     )
-    public String updateArtist(final ModelMap model, Artist artist)
+    public String updateArtist(final ModelMap model, Artist artist, @PathVariable(value = "id") Long id)
     {
         System.out.println("on met a jour l'artist ");
         System.out.println("nom de l'artist "+artist.getName());
 
-        model.put("artist",artist);
+        Optional<Artist> artistOptional = artistRepository.findById(id);
+
+        // erreur
+
+        Artist updateArtist = artistOptional.get();
+        updateArtist.setName(artist.getName());
+        artistRepository.save(updateArtist);
+        model.put("artist",updateArtist);
 
         return "detailArtist";
     }
@@ -180,15 +187,17 @@ public class ArtistController
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "")
-    public String deleteArtist(final ModelMap model)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public String deleteArtist(final ModelMap model, @PathVariable(value = "id") Long id)
     {
         System.out.println("delete celui la");
-        Artist artist = new Artist();
 
-        model.put("artist",artist);
+        //erreur
 
-        return "detailArtist";
+        artistRepository.deleteById(id);
+
+        
+        return "accueil";
     }
 
 
