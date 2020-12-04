@@ -29,8 +29,8 @@
 								</div>
 								<div class="col-lg-2 text-center">
 									<div class="list-group text-center" >
-										<form th:object="${commandObject}" th:action="@{/albums/delete/${artist.id}}" th:method="delete">
-											<input type="hidden" name="_method" value="delete">
+										<form th:action="'/albums/'+${album.id}" th:method="delete">
+											<input hidden="hidden" name="artist" th:value="${artist.id}">
 											<button class="btn-danger list-group-item list-group-item-action">
 												<span class="glyphicon glyphicon-remove"></span>
 											</button>
@@ -40,12 +40,15 @@
 							</div>
 							<div th:if="${artist.getId()}" class="row">
 								<div class="col-lg-10">
-									<input type="text" placeholder="Ajouter un album..." class="form-control ember-text-field ember-view">
+									<input form="form-album" name="title" type="text" placeholder="Ajouter un album..." class="form-control ember-text-field ember-view">
 								</div>
 								<div class="col-lg-2 text-center">
-									<button class="btn-success list-group-item list-group-item-action">
-										<span class="glyphicon glyphicon-plus"></span>
-									</button>
+									<form id="form-album" th:action="'/albums'" th:method="post">
+										<input hidden="hidden" name="artist" th:value="${artist.id}">
+										<button class="btn-success list-group-item list-group-item-action">
+											<span class="glyphicon glyphicon-plus"></span>
+										</button>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -54,19 +57,17 @@
 				<div class="row">
 
 					<form th:if="!${artist.getId()}" id="form-save"  th:action="'/artists'" th:method="post">
-						<!--                <input type="hidden" name="_method" value="delete">-->
 						<button type="submit"  class="btn btn-primary">Enregistrer</button>
 					</form>
-					<form th:if="${artist.getId()}" id="form-save"  th:action="'/artists/'+${artist.getId()}" th:method="put">
-						<!--                <input type="hidden" name="_method" value="delete">-->
+
+					<form th:if="${artist.getId()}" id="form-save" th:action="'/artists/'+${artist.getId()}" th:method="put">
 						<button type="submit"  class="btn btn-primary">Enregistrer</button>
 					</form>
+
 					<form th:if="${artist.getId()}" th:action="'/artists'+${artist.getId()}" th:method="delete">
-						<!--                <input type="hidden" name="_method" value="delete">-->
 						<button type="submit" class="btn btn-danger"  >Supprimer</button>
 					</form>
 
-<!--					<input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">-->
 				</div>
 
 			</div>

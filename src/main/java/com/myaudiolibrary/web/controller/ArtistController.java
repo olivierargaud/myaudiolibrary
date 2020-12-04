@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 
@@ -30,7 +29,7 @@ public class ArtistController
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                    //
+//                                          detail artiste                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -51,18 +50,18 @@ public class ArtistController
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                    //
+//                                           liste artistes                                                           //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(method = RequestMethod.GET, value = "",params = {"page","size"})
     public String listeArtists
-            (
-                    final ModelMap model ,
-                    @RequestParam(defaultValue = "0")Integer page,
-                    @RequestParam (defaultValue = "10")Integer size,
-                    @RequestParam (defaultValue = "ASC")String sortProperty,
-                    @RequestParam (defaultValue = "name")String sortDirection
-            )
+    (
+        final ModelMap model ,
+        @RequestParam(defaultValue = "0")Integer page,
+        @RequestParam (defaultValue = "10")Integer size,
+        @RequestParam (defaultValue = "ASC")String sortProperty,
+        @RequestParam (defaultValue = "name")String sortDirection
+    )
     {
 
 
@@ -77,19 +76,19 @@ public class ArtistController
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                    //
+//                                          liste artistes filtré par nom                                             //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(method = RequestMethod.GET, value = "",params = {"name"})
     public String searchArtists
-            (
-                    final ModelMap model ,
-                    @RequestParam String name,
-                    @RequestParam (defaultValue = "0")Integer page,
-                    @RequestParam (defaultValue = "10")Integer size,
-                    @RequestParam (defaultValue = "name")String sortProperty,
-                    @RequestParam (defaultValue = "ASC")String sortDirection
-            )
+    (
+        final ModelMap model ,
+        @RequestParam String name,
+        @RequestParam (defaultValue = "0")Integer page,
+        @RequestParam (defaultValue = "10")Integer size,
+        @RequestParam (defaultValue = "name")String sortProperty,
+        @RequestParam (defaultValue = "ASC")String sortDirection
+    )
     {
 
 
@@ -152,7 +151,7 @@ public class ArtistController
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                    update artist                                                                     //
+//                                    update artist                                                                   //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
