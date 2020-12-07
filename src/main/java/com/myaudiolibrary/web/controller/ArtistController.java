@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 
@@ -40,6 +41,7 @@ public class ArtistController
         if (artistOptional.isEmpty())
         {
             System.out.println("lancer une exception");
+            throw new EntityNotFoundException("artist non trouvé");
         }
 
         Artist artist = artistOptional.get();
