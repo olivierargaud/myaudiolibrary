@@ -16,4 +16,6 @@ public interface ArtistRepository extends JpaRepository<Artist, Long>
     Page<Artist> findArtistLike(@Param("nom")String nom, Pageable pageable);
 
     Page<Artist> findArtistsByNameContains(String nom, Pageable pageable);
+
+    boolean existsByName(String name);
 }

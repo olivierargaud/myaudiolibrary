@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <h1>Liste des artistes</h1>
-                        <form action="/artists" method="post">
+                        <form action="/artists/new" method="get" >
                             <button type="submit" name="your_name" value="your_value" class="btn btn-primary">Nouvel artiste</button>
                         </form>
                         <table class="table table-hover table-striped">
@@ -48,15 +48,26 @@
                                 <ul class="pagination">
                             <!--                class="disabled"-->
                                     <li th:if ="${!listeArtists.isFirst()}">
-                                        <a th:href="
-                                            @{/artists
-                                                (
-                                                    page=${listeArtists.previousOrFirstPageable().getPageNumber()},
-                                                    size=${param.size},
-                                                    sortDirection=${param.sortDirection},
-                                                    sortProperty=${param.sortProperty}
-                                                )
-                                            }">
+                                        <a th:href=" ${typeRecherche} ?
+                                         @{/artists
+                                            (
+                                                page=${listeArtists.previousOrFirstPageable().getPageNumber()},
+                                                size=${listeArtists.getSize()},
+                                                sortDirection=${listeArtists.getSort().stream().iterator().next().getDirection()},
+                                                sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()},
+                                                name=${typeRecherche}
+                                            )
+                                        }
+                                        :
+
+                                        @{/artists
+                                            (
+                                                page=${listeArtists.previousOrFirstPageable().getPageNumber()},
+                                                size=${listeArtists.getSize()},
+                                                sortDirection=${listeArtists.getSort().stream().iterator().next().getDirection()},
+                                                sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()}
+                                            )
+                                        }">
                                         «
                                         </a>
                                     </li>
@@ -66,12 +77,24 @@
                                         </a>
                                     </li>
                                     <li class="" th:if ="${!listeArtists.isLast()}">
-                                        <a th:href=" @{/artists
+                                        <a th:href=" ${typeRecherche} ?
+                                         @{/artists
                                             (
                                                 page=${listeArtists.nextOrLastPageable().getPageNumber()},
-                                                size=${param.size},
-                                                sortDirection=${param.sortDirection},
-                                                sortProperty=${param.sortProperty}
+                                                size=${listeArtists.getSize()},
+                                                sortDirection=${listeArtists.getSort().stream().iterator().next().getDirection()},
+                                                sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()},
+                                                name=${typeRecherche}
+                                            )
+                                        }
+                                        :
+
+                                        @{/artists
+                                            (
+                                                page=${listeArtists.nextOrLastPageable().getPageNumber()},
+                                                size=${listeArtists.getSize()},
+                                                sortDirection=${listeArtists.getSort().stream().iterator().next().getDirection()},
+                                                sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()}
                                             )
                                         }">
                                         »

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NonUniqueResultException;
 import java.util.Optional;
 
 
@@ -51,20 +52,26 @@ public class ArtistController
 
     }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                           liste artistes                                                           //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @RequestMapping(method = RequestMethod.GET, value = "",params = {"page","size"})
+    @RequestMapping(method = RequestMethod.GET, value = "")
     public String listeArtists
-    (
-        final ModelMap model ,
-        @RequestParam(defaultValue = "0")Integer page,
-        @RequestParam (defaultValue = "10")Integer size,
-        @RequestParam (defaultValue = "ASC")String sortProperty,
-        @RequestParam (defaultValue = "name")String sortDirection
-    )
+            (
+                    final ModelMap model ,
+                    @RequestParam(defaultValue = "0")Integer page,
+                    @RequestParam (defaultValue = "10")Integer size,
+                    @RequestParam (defaultValue = "name")String sortProperty,
+                    @RequestParam (defaultValue = "ASC")String sortDirection
+            )
     {
+        System.out.println("liste de tous les artistes");
+        if (page<0)
+        {
+            throw new IllegalArgumentException("la valeur de page ne peut pas etre négative");
+        }
 
 
         PageRequest pageRequest = PageRequest.of(page,size, Sort.Direction.fromString(sortDirection),sortProperty);
@@ -77,22 +84,27 @@ public class ArtistController
         return "listeArtists";
     }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                          liste artistes filtré par nom                                             //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(method = RequestMethod.GET, value = "",params = {"name"})
     public String searchArtists
-    (
-        final ModelMap model ,
-        @RequestParam String name,
-        @RequestParam (defaultValue = "0")Integer page,
-        @RequestParam (defaultValue = "10")Integer size,
-        @RequestParam (defaultValue = "name")String sortProperty,
-        @RequestParam (defaultValue = "ASC")String sortDirection
-    )
+            (
+                    final ModelMap model ,
+                    @RequestParam String name,
+                    @RequestParam (defaultValue = "0")Integer page,
+                    @RequestParam (defaultValue = "10")Integer size,
+                    @RequestParam (defaultValue = "name")String sortProperty,
+                    @RequestParam (defaultValue = "ASC")String sortDirection
+            )
     {
-
+        System.out.println("liste des artistes filtré par nom");
+        if (page<0)
+        {
+            throw new IllegalArgumentException("la valeur de page ne peut pas etre négative");
+        }
 
         PageRequest pageRequest = PageRequest.of(page,size, Sort.Direction.fromString(sortDirection),sortProperty);
 
@@ -100,9 +112,11 @@ public class ArtistController
 
         model.put("listeArtists",artistPage);
 
+        model.put("typeRecherche",name);
 
         return "listeArtists";
     }
+
 
 
 
@@ -144,6 +158,11 @@ public class ArtistController
         System.out.println("on sauve l'artist ");
         System.out.println("nom de l'artist "+artist.getName());
 
+        if (artistRepository.existsByName(artist.getName()))
+        {
+            throw new NonUniqueResultException("l'artiste "+artist.getName()+" existe déja" );
+        }
+
         artistRepository.save(artist);
 
         model.put("artist",artistRepository.findByName(artist.getName()));
@@ -169,9 +188,18 @@ public class ArtistController
         System.out.println("on met a jour l'artist ");
         System.out.println("nom de l'artist "+artist.getName());
 
+
+        if(artistRepository.existsByName(artist.getName()))
+        {
+            throw new NonUniqueResultException("un artiste avec ce nom existe déja !");
+        }
+
         Optional<Artist> artistOptional = artistRepository.findById(id);
 
-        // erreur
+        if (artistOptional.isEmpty())
+        {
+            throw new EntityNotFoundException("l'artist n'existe pas");
+        }
 
         Artist updateArtist = artistOptional.get();
         updateArtist.setName(artist.getName());
