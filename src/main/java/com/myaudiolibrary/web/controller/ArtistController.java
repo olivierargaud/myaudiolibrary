@@ -172,6 +172,11 @@ public class ArtistController
         System.out.println("on sauve l'artist ");
         System.out.println("nom de l'artist "+artist.getName());
 
+        if(artist.getName().length()>120)
+        {
+            throw new MyException("le nom de l'artiste comporte trop de caractères");
+        }
+
         if (artistRepository.existsByName(artist.getName()))
         {
             throw new NonUniqueResultException("l'artiste "+artist.getName()+" existe déja" );
@@ -205,6 +210,11 @@ public class ArtistController
     {
         System.out.println("on met a jour l'artist ");
         System.out.println("nom de l'artist "+artist.getName());
+
+        if(artist.getName().length()>120)
+        {
+            throw new MyException("le nom de l'artiste comporte trop de caractères");
+        }
 
         if (!artistRepository.existsById(id))
         {
