@@ -18,7 +18,7 @@
 
 						<div class="form-group">
 							<label for="name" class="form-control-label">Nom</label>
-							<input form="form-save" name="name" type="text" id="name" class="ember-text-field form-control ember-view" th:value="${artist.name}">
+							<input form="form-save" name="name" type="text" id="name" class="ember-text-field form-control ember-view" required th:value="${artist.name}">
 
 							<label th:if="${artist.getId()}" for="performance" class="form-control-label">Albums</label>
 							<div th:if="${artist.getId()}" class="row" th:each="album : ${artist.getAlbums()}">
@@ -40,7 +40,7 @@
 							</div>
 							<div th:if="${artist.getId()}" class="row">
 								<div class="col-lg-10">
-									<input form="form-album" name="title" type="text" placeholder="Ajouter un album..." class="form-control ember-text-field ember-view">
+									<input form="form-album" name="title" type="text" placeholder="Ajouter un album..." required class="form-control ember-text-field ember-view">
 								</div>
 								<div class="col-lg-2 text-center">
 									<form id="form-album" th:action="'/albums'" th:method="post">

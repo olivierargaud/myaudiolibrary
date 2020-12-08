@@ -19,9 +19,9 @@ public class GlobalExceptionHandler
     @ExceptionHandler(EntityNotFoundException.class)
     public ModelAndView handleEntityNotFoundException(EntityNotFoundException e)
     {
-        System.out.println("j'arrive dans l'exception");
+//        System.out.println("j'arrive dans l'exception");
         ModelAndView modelAndView = new ModelAndView("pageErreur", HttpStatus.NOT_FOUND);
-        modelAndView.addObject("error", e.getMessage()+" EntityNotFoundException");
+        modelAndView.addObject("error", e.getMessage());
         modelAndView.addObject("status", HttpStatus.NOT_FOUND);
 
         return modelAndView;
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler
     {
 
         ModelAndView modelAndView = new ModelAndView("pageErreur", HttpStatus.NOT_FOUND);
-        modelAndView.addObject("error", e.getMessage()+" IllegalArgumentException");
+        modelAndView.addObject("error", e.getMessage());
         modelAndView.addObject("status", HttpStatus.NOT_FOUND);
 
         return modelAndView;
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler
     {
 
         ModelAndView modelAndView = new ModelAndView("pageErreur", HttpStatus.NOT_FOUND);
-        modelAndView.addObject("error", e.getMessage()+" PropertyReferenceException");
+        modelAndView.addObject("error", e.getMessage());
         modelAndView.addObject("status", HttpStatus.NOT_FOUND);
 
         return modelAndView;
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler
     {
 
         ModelAndView modelAndView = new ModelAndView("pageErreur", HttpStatus.CONFLICT);
-        modelAndView.addObject("error", e.getMessage()+" NonUniqueResultException");
+        modelAndView.addObject("error", e.getMessage());
         modelAndView.addObject("status", HttpStatus.CONFLICT);
 
         return modelAndView;
@@ -71,13 +71,24 @@ public class GlobalExceptionHandler
     {
 
         ModelAndView modelAndView = new ModelAndView("pageErreur", HttpStatus.NOT_FOUND);
-        modelAndView.addObject("error", e.getMessage()+" EmptyResultDataAccessException");
-        modelAndView.addObject("status", HttpStatus.CONFLICT);
+        modelAndView.addObject("error", e.getMessage());
+        modelAndView.addObject("status", HttpStatus.NOT_FOUND);
 
         return modelAndView;
 
     }
 
+    @ExceptionHandler(MyException.class)
+    public ModelAndView MyException(MyException e)
+    {
+
+        ModelAndView modelAndView = new ModelAndView("pageErreur", HttpStatus.NOT_FOUND);
+        modelAndView.addObject("error", e.getMessage());
+        modelAndView.addObject("status", HttpStatus.NOT_FOUND);
+
+        return modelAndView;
+
+    }
 
 
 
