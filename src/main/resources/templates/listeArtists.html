@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <h1>Liste des artistes</h1>
+                        <h1 th:text="${typeRecherche} ? 'Liste des artistes contenant '+${typeRecherche}: 'Liste de tous les artistes'"></h1>
                         <form action="/artists/new" method="get" >
                             <button type="submit" name="your_name" value="your_value" class="btn btn-primary">Nouvel artiste</button>
                         </form>
@@ -35,13 +35,17 @@
                         </table>
                         <div class="row">
                             <div class="col-lg-6">
-                                <p>
-                                    Affichage des artistes
-                                    [[${listeArtists.getSize()} * ${listeArtists.getNumber()} + 1]]
-                                    à
-                                    [[${listeArtists.getSize()} * ${listeArtists.getNumber()} + ${listeArtists.getNumberOfElements()}]]
-                                    sur un total de
-                                    [[${listeArtists.getTotalElements()}]]
+                                <p th:text="${listeArtists.getTotalElements()}==0
+                                ?
+                                'aucun artiste trouvé'
+                                :
+                                'Affichage des artistes ' +
+                                    ((${listeArtists.getSize()} * ${listeArtists.getNumber()}) + 1 )+
+                                    ' à '+
+                                    ((${listeArtists.getSize()} * ${listeArtists.getNumber()}) + ${listeArtists.getNumberOfElements()})+
+                                    ' sur un total de '+
+                                    ${listeArtists.getTotalElements()}">
+
                                 </p>
                             </div>
                             <div class="col-lg-6">
