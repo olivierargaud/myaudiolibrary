@@ -233,10 +233,6 @@ public class ArtistController
 
         Optional<Artist> artistOptional = artistRepository.findById(id);
 
-        if (artistOptional.isEmpty())
-        {
-            throw new EntityNotFoundException("l'artist n'existe pas");
-        }
 
         Artist updateArtist = artistOptional.get();
         updateArtist.setName(artist.getName());
