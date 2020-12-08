@@ -1,6 +1,7 @@
 package com.myaudiolibrary.web.controller;
 
 
+import com.myaudiolibrary.web.exception.MyException;
 import com.myaudiolibrary.web.model.Album;
 import com.myaudiolibrary.web.model.Artist;
 import com.myaudiolibrary.web.repository.AlbumRepository;
@@ -38,6 +39,11 @@ public class AlbumController
     {
         System.out.println("on ajoute l'album "+album.getTitle());
         System.out.println("on recupere l'id "+album.getArtist().getId()+" et le nom de l'artist "+album.getArtist());
+
+        if(album.getTitle().length()>160)
+        {
+            throw new MyException("le titre de l'album comporte trop de caractères");
+        }
 
         albumRepository.save(album);
 
