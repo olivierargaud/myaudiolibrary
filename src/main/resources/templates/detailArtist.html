@@ -64,7 +64,7 @@
 						<button type="submit"  class="btn btn-primary">Enregistrer</button>
 					</form>
 
-					<form th:if="${artist.getId()}" th:action="'/artists'+${artist.getId()}" th:method="delete">
+					<form th:if="${artist.getId()}" th:action="'/artists/'+${artist.getId()}" th:method="delete">
 						<button type="submit" class="btn btn-danger"  >Supprimer</button>
 					</form>
 

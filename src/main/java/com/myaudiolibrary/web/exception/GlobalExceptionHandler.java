@@ -1,6 +1,7 @@
 package com.myaudiolibrary.web.exception;
 
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -63,5 +64,21 @@ public class GlobalExceptionHandler
         return modelAndView;
 
     }
+
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ModelAndView handleEmptyResultDataAccessException(EmptyResultDataAccessException e)
+    {
+
+        ModelAndView modelAndView = new ModelAndView("pageErreur", HttpStatus.NOT_FOUND);
+        modelAndView.addObject("error", e.getMessage()+" EmptyResultDataAccessException");
+        modelAndView.addObject("status", HttpStatus.CONFLICT);
+
+        return modelAndView;
+
+    }
+
+
+
 
 }
