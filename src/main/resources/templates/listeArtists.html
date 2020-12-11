@@ -21,7 +21,54 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Nom
-                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                        <a th:if="${listeArtists.getSort().stream().iterator().next().getDirection().toString()}=='ASC'"
+                                              th:href=" ${typeRecherche} ?
+                                                     @{/artists
+                                                        (
+                                                            page=${listeArtists.getNumber()},
+                                                            size=${listeArtists.getSize()},
+                                                            sortDirection='DESC',
+                                                            sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()},
+                                                            name=${typeRecherche}
+                                                        )
+                                                    }
+                                                    :
+                                                    @{/artists
+                                                        (
+                                                            page=${listeArtists.getNumber()},
+                                                            size=${listeArtists.getSize()},
+                                                            sortDirection='DESC',
+                                                            sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()}
+                                                        )
+                                                    }"
+                                              class="glyphicon glyphicon-chevron-up"
+                                        >
+                                        </a>
+
+                                        <a th:if="${listeArtists.getSort().stream().iterator().next().getDirection().toString()}=='DESC'"
+                                              th:href=" ${typeRecherche} ?
+                                                     @{/artists
+                                                        (
+                                                            page=${listeArtists.getNumber()},
+                                                            size=${listeArtists.getSize()},
+                                                            sortDirection='ASC',
+                                                            sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()},
+                                                            name=${typeRecherche}
+                                                        )
+                                                    }
+                                                    :
+                                                    @{/artists
+                                                        (
+                                                            page=${listeArtists.getNumber()},
+                                                            size=${listeArtists.getSize()},
+                                                            sortDirection='ASC',
+                                                            sortProperty=${listeArtists.getSort().stream().iterator().next().getProperty()}
+                                                        )
+                                                    }"
+                                              class="glyphicon glyphicon-chevron-down"
+                                        >
+
+                                        </a>
                                     </th>
                                     <th scope="col"></th>
                                 </tr>
