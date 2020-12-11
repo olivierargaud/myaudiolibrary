@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NonUniqueResultException;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -86,6 +86,14 @@ public class ArtistController
 
         model.put("listeArtists",artistPage);
 
+        ArrayList<Integer> listePage = new ArrayList<Integer>();
+
+        for (int i =0;i<artistPage.getTotalPages();i++)
+        {
+            listePage.add(i);
+        }
+        model.put("listePage",listePage);
+
 
         return "listeArtists";
     }
@@ -109,7 +117,7 @@ public class ArtistController
 //        System.out.println("liste des artistes filtré par nom");
         if (page<0)
         {
-            throw new IllegalArgumentException("la valeur de page ne peut pas etre négative");
+            throw new IllegalArgumentException("la valeur de page ne peut pas être négative");
         }
 
         PageRequest pageRequest = PageRequest.of(page,size, Sort.Direction.fromString(sortDirection),sortProperty);
@@ -118,7 +126,7 @@ public class ArtistController
 
         if(page>=artistPage.getTotalPages()&&page!=0)
         {
-            throw new EntityNotFoundException("la page demandée est supérieur aux nombre total de pages");
+            throw new EntityNotFoundException("la page demandée est supérieure au nombre total de pages");
         }
 
         model.put("listeArtists",artistPage);
@@ -127,6 +135,14 @@ public class ArtistController
         {
             model.put("typeRecherche",name);
         }
+
+        ArrayList<Integer> listePage = new ArrayList<Integer>();
+
+        for (int i =0;i<artistPage.getTotalPages();i++)
+        {
+            listePage.add(i);
+        }
+        model.put("listePage",listePage);
 
         return "listeArtists";
     }
@@ -169,8 +185,8 @@ public class ArtistController
     )
     public String saveArtist(final ModelMap model, Artist artist)
     {
-        System.out.println("on sauve l'artist ");
-        System.out.println("nom de l'artist "+artist.getName());
+//        System.out.println("on sauve l'artiste ");
+//        System.out.println("nom de l'artiste "+artist.getName());
 
         if(artist.getName().length()>120)
         {
@@ -208,8 +224,8 @@ public class ArtistController
     )
     public String updateArtist(final ModelMap model, Artist artist, @PathVariable(value = "id") Long id)
     {
-        System.out.println("on met a jour l'artist ");
-        System.out.println("nom de l'artist "+artist.getName());
+//        System.out.println("on met a jour l'artist ");
+//        System.out.println("nom de l'artist "+artist.getName());
 
         if(artist.getName().length()>120)
         {

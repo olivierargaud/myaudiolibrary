@@ -12,6 +12,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NonUniqueResultException;
 import java.util.Optional;
 
 
@@ -37,12 +39,17 @@ public class AlbumController
     )
     public RedirectView addAlbum(final ModelMap model, Album album)
     {
-        System.out.println("on ajoute l'album "+album.getTitle());
-        System.out.println("on recupere l'id "+album.getArtist().getId()+" et le nom de l'artist "+album.getArtist());
+//        System.out.println("on ajoute l'album "+album.getTitle());
+//        System.out.println("on recupere l'id "+album.getArtist().getId()+" et le nom de l'artist "+album.getArtist());
 
-        if(album.getTitle().length()>160)
+        if(album.getTitle().length() > 160)
         {
             throw new MyException("le titre de l'album comporte trop de caractères");
+        }
+
+        if(albumRepository.existsAlbumByTitleAndArtist_Id(album.getTitle(),album.getArtist().getId()))
+        {
+            throw new NonUniqueResultException("cet artiste possède déjà un album de ce titre");
         }
 
         albumRepository.save(album);
@@ -67,15 +74,19 @@ public class AlbumController
     {
 
         Optional<Album> optionalAlbum = albumRepository.findById(id);
-        // erreur
+        if(optionalAlbum.isEmpty())
+        {
+            throw new EntityNotFoundException("l'album n'existe pas");
+        }
+
         Artist artist = optionalAlbum.get().getArtist();
 
-        System.out.println("on supprime l'album" + id);
+//        System.out.println("on supprime l'album" + id);
         albumRepository.deleteById(id);
 
         model.put("artist",artist);
 
-        return new RedirectView("/artists/"+artist.getId());
+        return new RedirectView("/artists/" + artist.getId());
     }
 
 

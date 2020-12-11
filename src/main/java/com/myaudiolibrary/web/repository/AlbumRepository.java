@@ -9,4 +9,6 @@ public interface AlbumRepository extends JpaRepository<Album, Long>
 
     Album findAlbumByTitleAndArtist_Id(String title, Long artistId);
 
+    boolean existsAlbumByTitleAndArtist_Id(String title, Long artistId);
+
 }
