@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/menu :: head">
+</head>
+
+<body class="ember-application">
+
+<div>
+    <div th:replace="fragments/menu :: navbar">
+    </div>
+
+    <div class="jumbotron">
+        <h1>Erreur <span th:text="${status}"></span></h1>
+        <p class="lead" th:text="${error}"></p>
+    </div>
+
+</div>
+</body>
+
+</html>
